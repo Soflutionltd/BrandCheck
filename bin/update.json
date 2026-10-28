@@ -1,0 +1,5 @@
+{
+  "package": "brandcheck",
+  "server": "dist/index.js",
+  "passthrough": []
+}

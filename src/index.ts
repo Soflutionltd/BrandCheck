@@ -7,11 +7,12 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { attachUpdateNotice, startUpdateCheck } from "./update-notice.js";
 import { z } from "zod";
 import { resolve4 } from "dns/promises";
 
 const SERVER_NAME = "brandcheck";
-const SERVER_VERSION = "1.0.0";
+const SERVER_VERSION = "1.0.2";
 
 // ─── Types ────────────────────────────────────────────────────────────
 
@@ -404,6 +405,7 @@ server.tool(
 
 // ─── Start ────────────────────────────────────────────────────────────
 
-const transport = new StdioServerTransport();
+const transport = attachUpdateNotice(new StdioServerTransport());
+startUpdateCheck("brandcheck", SERVER_VERSION, "https://github.com/Soflutionltd/BrandCheck");
 await server.connect(transport);
 console.error(`${SERVER_NAME} v${SERVER_VERSION} running on stdio`);

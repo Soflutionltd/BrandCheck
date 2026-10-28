@@ -14,7 +14,7 @@
 <p align="center">
   <a href="cursor://anysphere.cursor-deeplink/mcp/install?name=brandcheck&config=eyJ0eXBlIjoic3RkaW8iLCJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImJyYW5kY2hlY2tAbGF0ZXN0Il19"><img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Install in Cursor" /></a>
   &nbsp;&nbsp;
-  <a href="https://soflution1.github.io/BrandCheck/install.html?name=brandcheck&config=eyJ0eXBlIjoic3RkaW8iLCJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImJyYW5kY2hlY2tAbGF0ZXN0Il19"><img src="https://img.shields.io/badge/Install_via-Web-8b5cf6?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiPjxwYXRoIGQ9Ik0xMiAyYTEwIDEwIDAgMSAwIDAgMjAgMTAgMTAgMCAwIDAgMC0yMHoiLz48cGF0aCBkPSJNMiAxMmgyMCIvPjxwYXRoIGQ9Ik0xMiAyYTEwIDEwIDAgMCAxIDggOCAxMCAxMCAwIDAgMS04IDgiLz48cGF0aCBkPSJNMTIgMmExMCAxMCAwIDAgMC04IDggMTAgMTAgMCAwIDAgOCA4Ii8+PC9zdmc+" alt="Install via Web" /></a>
+  <a href="https://soflutionltd.github.io/BrandCheck/install.html?name=brandcheck&config=eyJ0eXBlIjoic3RkaW8iLCJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsImJyYW5kY2hlY2tAbGF0ZXN0Il19"><img src="https://img.shields.io/badge/Install_via-Web-8b5cf6?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiPjxwYXRoIGQ9Ik0xMiAyYTEwIDEwIDAgMSAwIDAgMjAgMTAgMTAgMCAwIDAgMC0yMHoiLz48cGF0aCBkPSJNMiAxMmgyMCIvPjxwYXRoIGQ9Ik0xMiAyYTEwIDEwIDAgMCAxIDggOCAxMCAxMCAwIDAgMS04IDgiLz48cGF0aCBkPSJNMTIgMmExMCAxMCAwIDAgMC04IDggMTAgMTAgMCAwIDAgOCA4Ii8+PC9zdmc+" alt="Install via Web" /></a>
 </p>
 
 ---
@@ -53,6 +53,12 @@ Add to your MCP config (`~/.cursor/mcp.json`, Claude Desktop, etc.):
   }
 }
 ```
+
+### Automatic updates
+
+Every install below keeps itself up to date, without restarting Claude or Cursor. The MCP client talks to a small supervisor (`bin/supervise.cjs`) that stays connected while the server runs behind it. At start-up and every 6 hours it asks npm for the latest `brandcheck`, installs it in the background in `~/.soflution/mcp/brandcheck/`, and switches over as soon as no request is in flight (the client is told the tool list may have changed). A version that fails to start is rolled back at once and never picked again on that machine. npm checks the integrity of every download, and releases are published from GitHub Actions with provenance.
+
+The only network call is that version check to `registry.npmjs.org`; nothing about your machine or your use is sent. Turn it off with `NO_UPDATE_NOTIFIER=1` (or `SOFLUTION_AUTO_UPDATE=0`). Started directly with `node dist/...`, brandcheck does not update itself and only mentions a newer version in its first tool result.
 
 ### Option 3: npx (zero install)
 
@@ -141,7 +147,7 @@ All checks run **in parallel**:
 
 ## Also by Soflution
 
-- **[depsonar](https://github.com/Soflution1/depsonar)** — The most complete dependency audit MCP server. 9 languages, 23 tools. Scan, audit, update, migrate.
+- **[depsonar](https://github.com/Soflutionltd/depsonar)** — The most complete dependency audit MCP server. 9 languages, 23 tools. Scan, audit, update, migrate.
 
 ---
 
